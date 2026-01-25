@@ -115,46 +115,46 @@ def test_trap_rules():
     # 清空棋盘
     game.board = [[None for _ in range(7)] for _ in range(9)]
 
-    # 测试1：棋子可以进入自己的陷阱
-    game.board[1][2] = Piece('鼠', 1, 'red')
-    can_enter = game.is_valid_move(1, 2, 0, 2, 'red')
+    # 测试1：棋子可以进入自己的陷阱（红方陷阱在8,2, 8,4, 7,3）
+    game.board[7][2] = Piece('鼠', 1, 'red')
+    can_enter = game.is_valid_move(7, 2, 8, 2, 'red')
     print(f"红方棋子可以进入红方陷阱: {'✓ 正确' if can_enter else '✗ 错误'}")
 
-    # 测试2：棋子可以进入对方的陷阱
+    # 测试2：棋子可以进入对方的陷阱（蓝方陷阱在0,2, 0,4, 1,3）
     game.board[1][2] = Piece('鼠', 1, 'blue')
     can_enter = game.is_valid_move(1, 2, 0, 2, 'blue')
     print(f"蓝方棋子可以进入红方陷阱: {'✓ 正确' if can_enter else '✗ 错误'}")
 
     # 测试3：棋子在自己的陷阱中，对方不能吃掉
-    game.board[0][2] = Piece('鼠', 1, 'red')  # 红方老鼠在红方陷阱中
-    game.board[0][1] = Piece('象', 8, 'blue')  # 蓝方大象在旁边
-    can_capture = game.is_valid_move(0, 1, 0, 2, 'blue')
+    game.board[8][2] = Piece('鼠', 1, 'red')  # 红方老鼠在红方陷阱中
+    game.board[8][1] = Piece('象', 8, 'blue')  # 蓝方大象在旁边
+    can_capture = game.is_valid_move(8, 1, 8, 2, 'blue')
     print(f"蓝方大象不能吃红方陷阱中的红方老鼠: {'✓ 正确' if not can_capture else '✗ 错误'}")
 
     # 测试4：棋子在对方的陷阱中，对方任意棋子都可以吃掉
-    game.board[0][2] = Piece('象', 8, 'blue')  # 蓝方大象在红方陷阱中
-    game.board[0][1] = Piece('鼠', 1, 'red')  # 红方老鼠在旁边
-    can_capture = game.is_valid_move(0, 1, 0, 2, 'red')
+    game.board[8][2] = Piece('象', 8, 'blue')  # 蓝方大象在红方陷阱中
+    game.board[8][1] = Piece('鼠', 1, 'red')  # 红方老鼠在旁边
+    can_capture = game.is_valid_move(8, 1, 8, 2, 'red')
     print(f"红方老鼠可以吃红方陷阱中的蓝方大象: {'✓ 正确' if can_capture else '✗ 错误'}")
 
     # 测试5：棋子在对方的陷阱中，对方低等级棋子也可以吃掉高等级棋子
-    game.board[0][2] = Piece('象', 8, 'blue')  # 蓝方大象在红方陷阱中
-    game.board[0][1] = Piece('猫', 2, 'red')  # 红方猫在旁边
-    can_capture = game.is_valid_move(0, 1, 0, 2, 'red')
+    game.board[8][2] = Piece('象', 8, 'blue')  # 蓝方大象在红方陷阱中
+    game.board[8][1] = Piece('猫', 2, 'red')  # 红方猫在旁边
+    can_capture = game.is_valid_move(8, 1, 8, 2, 'red')
     print(f"红方猫可以吃红方陷阱中的蓝方大象: {'✓ 正确' if can_capture else '✗ 错误'}")
 
     # 测试6：棋子可以从自己的陷阱中走出来
     game = DoushouqiGame()
     game.board = [[None for _ in range(7)] for _ in range(9)]
-    game.board[0][2] = Piece('鼠', 1, 'red')  # 红方老鼠在红方陷阱中
-    can_move = game.is_valid_move(0, 2, 0, 1, 'red')
+    game.board[8][2] = Piece('鼠', 1, 'red')  # 红方老鼠在红方陷阱中
+    can_move = game.is_valid_move(8, 2, 8, 1, 'red')
     print(f"棋子可以从自己的陷阱中走出来: {'✓ 正确' if can_move else '✗ 错误'}")
 
     # 测试7：棋子可以从对方的陷阱中走出来
     game = DoushouqiGame()
     game.board = [[None for _ in range(7)] for _ in range(9)]
-    game.board[0][2] = Piece('鼠', 1, 'blue')  # 蓝方老鼠在红方陷阱中
-    can_move = game.is_valid_move(0, 2, 0, 1, 'blue')
+    game.board[8][2] = Piece('鼠', 1, 'blue')  # 蓝方老鼠在红方陷阱中
+    can_move = game.is_valid_move(8, 2, 8, 1, 'blue')
     print(f"棋子可以从对方的陷阱中走出来: {'✓ 正确' if can_move else '✗ 错误'}")
 
 def test_rat_eat_elephant():
@@ -183,19 +183,19 @@ def test_cannot_enter_own_den():
     # 清空棋盘
     game.board = [[None for _ in range(7)] for _ in range(9)]
 
-    # 测试1：红方棋子不能进入红方兽穴
-    game.board[1][3] = Piece('鼠', 1, 'red')
-    can_enter = game.is_valid_move(1, 3, 0, 3, 'red')
-    print(f"红方棋子不能进入红方兽穴: {'✓ 正确' if not can_enter else '✗ 错误'}")
-
-    # 测试2：蓝方棋子不能进入蓝方兽穴
-    game.board[7][3] = Piece('鼠', 1, 'blue')
-    can_enter = game.is_valid_move(7, 3, 8, 3, 'blue')
-    print(f"蓝方棋子不能进入蓝方兽穴: {'✓ 正确' if not can_enter else '✗ 错误'}")
-
-    # 测试3：红方棋子可以进入蓝方兽穴
+    # 测试1：红方棋子不能进入红方兽穴（红方兽穴在8,3）
     game.board[7][3] = Piece('鼠', 1, 'red')
     can_enter = game.is_valid_move(7, 3, 8, 3, 'red')
+    print(f"红方棋子不能进入红方兽穴: {'✓ 正确' if not can_enter else '✗ 错误'}")
+
+    # 测试2：蓝方棋子不能进入蓝方兽穴（蓝方兽穴在0,3）
+    game.board[1][3] = Piece('鼠', 1, 'blue')
+    can_enter = game.is_valid_move(1, 3, 0, 3, 'blue')
+    print(f"蓝方棋子不能进入蓝方兽穴: {'✓ 正确' if not can_enter else '✗ 错误'}")
+
+    # 测试3：红方棋子可以进入蓝方兽穴（蓝方兽穴在0,3）
+    game.board[1][3] = Piece('鼠', 1, 'red')
+    can_enter = game.is_valid_move(1, 3, 0, 3, 'red')
     print(f"红方棋子可以进入蓝方兽穴: {'✓ 正确' if can_enter else '✗ 错误'}")
 
 def test_other_pieces_cannot_enter_river():
