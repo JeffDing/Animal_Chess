@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斗兽棋游戏</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🦁 斗兽棋 🐘</h1>
+        
+        <div class="game-info">
+            <div class="status" id="gameStatus">红方回合</div>
+            <div class="mode-info" id="modeInfo">当前模式：人人对战</div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="btnPvP" onclick="switchMode('pvp')">人人对战</button>
+            <button class="btn" id="btnPvE" onclick="switchMode('pve')">人机对战</button>
+            <button class="btn" id="btnAIvAI" onclick="switchMode('aivai')">AI对战</button>
+            <button class="btn restart-btn" onclick="startNewGame()">新游戏</button>
+        </div>
+
+        <div class="game-board" id="gameBoard">
+            <!-- 棋盘将通过JavaScript动态生成 -->
+        </div>
+
+        <div class="piece-legend">
+            <h3>棋子说明</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <span class="piece-icon">🐘</span> <span>象 (8)</span>
+                    <span class="piece-icon">🦁</span> <span>狮 (7)</span>
+                    <span class="piece-icon">🐯</span> <span>虎 (6)</span>
+                    <span class="piece-icon">🐆</span> <span>豹 (5)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="piece-icon">🐺</span> <span>狼 (4)</span>
+                    <span class="piece-icon">🐕</span> <span>狗 (3)</span>
+                    <span class="piece-icon">🐱</span> <span>猫 (2)</span>
+                    <span class="piece-icon">🐀</span> <span>鼠 (1)</span>
+                </div>
+            </div>
+            <p class="legend-note">* 大吃小，老鼠可以吃大象</p>
+        </div>
+
+        <div class="rules">
+            <h3>游戏规则</h3>
+            <ul>
+                <li>双方轮流移动棋子，每次只能移动一格</li>
+                <li>大棋子可以吃小棋子（象>狮>虎>豹>狼>狗>猫>鼠）</li>
+                <li>老鼠可以吃大象，但不能从水里吃岸上的棋子</li>
+                <li>只有老鼠可以进入河流</li>
+                <li>狮子和老虎可以跳过河流（河中不能有老鼠）</li>
+                <li>进入对方陷阱的棋子会被对方任意棋子吃掉</li>
+                <li>进入对方兽穴即获胜，或吃掉对方所有棋子即获胜</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>
