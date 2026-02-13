@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>🦁 斗兽棋 🐘</h1>
-        
+
         <div class="game-info">
             <div class="status" id="gameStatus">红方回合</div>
             <div class="mode-info" id="modeInfo">当前模式：人人对战</div>
@@ -20,6 +20,20 @@
             <button class="btn" id="btnPvE" onclick="switchMode('pve')">人机对战</button>
             <button class="btn" id="btnAIvAI" onclick="switchMode('aivai')">AI对战</button>
             <button class="btn restart-btn" onclick="startNewGame()">新游戏</button>
+        </div>
+
+        <div class="difficulty-controls" id="difficultyControls" style="display: none;">
+            <label for="difficultySelect">AI难度：</label>
+            <select id="difficultySelect" onchange="changeDifficulty(this.value)">
+                <option value="beginner">入门</option>
+                <option value="easy">简单</option>
+                <option value="amateur" selected>业余</option>
+                <option value="professional">专业</option>
+                <option value="master">大师</option>
+            </select>
+            <div class="difficulty-description" id="difficultyDescription">
+                业余级别：AI有基本策略，适合有一定经验的玩家
+            </div>
         </div>
 
         <div class="game-board" id="gameBoard">

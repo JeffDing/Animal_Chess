@@ -6,7 +6,8 @@ let gameState = {
     winner: null,
     selectedPiece: null,
     validMoves: [],
-    gameMode: 'pvp' // 'pvp', 'pve', 'aivai'
+    gameMode: 'pvp', // 'pvp', 'pve', 'aivai'
+    aiDifficulty: 'amateur' // 'easy', 'medium', 'hard', 'expert'
 };
 
 // 棋子图标映射
@@ -79,6 +80,14 @@ function switchMode(mode) {
         'aivai': 'AI对战'
     };
     document.getElementById('modeInfo').textContent = '当前模式：' + modeNames[mode];
+
+      // 显示或隐藏难度选择器
+      const difficultyControls = document.getElementById('difficultyControls');
+      if (mode === 'pve' || mode === 'aivai') {
+          difficultyControls.style.display = 'block';
+      } else {
+          difficultyControls.style.display = 'none';
+      }
     
     // 开始新游戏
     startNewGame();
@@ -91,7 +100,8 @@ function startNewGame() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ mode: gameState.gameMode })
+        body: JSON.stringify({ mode: gameState.gameMode,
+              difficulty: gameState.aiDifficulty })
     })
     .then(response => response.json())
     .then(data => {
@@ -242,7 +252,8 @@ function makeMove(fromRow, fromCol, toRow, toCol) {
             fromCol: fromCol,
             toRow: toRow,
             toCol: toCol,
-            mode: gameState.gameMode
+            mode: gameState.gameMode,
+              difficulty: gameState.aiDifficulty
         })
     })
     .then(response => response.json())
@@ -284,7 +295,8 @@ function makeAIMove() {
         },
         body: JSON.stringify({
             player: gameState.currentPlayer,
-            mode: gameState.gameMode
+            mode: gameState.gameMode,
+              difficulty: gameState.aiDifficulty
         })
     })
     .then(response => response.json())
@@ -363,3 +375,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 确保模式信息正确显示
     document.getElementById('modeInfo').textContent = '当前模式：人人对战';
 });
+
+  // 切换AI难度
+  function changeDifficulty(difficulty) {
+      gameState.aiDifficulty = difficulty;
+
+      // 更新难度描述
+      const descriptions = {
+          'beginner': '入门级别：AI基本不思考，随机性很强，适合完全新手',
+          'easy': '简单级别：AI有少量前瞻，会犯一些错误，适合新手',
+          'amateur': '业余级别：AI有基本策略，适合有一定经验的玩家',
+          'professional': '专业级别：AI策略性强，会深度思考，适合高手',
+          'master': '大师级别：AI极难战胜，会深度思考和战术分析，追求极致'
+      };
+
+      document.getElementById('difficultyDescription').textContent = descriptions[difficulty];
+  }

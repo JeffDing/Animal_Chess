@@ -482,3 +482,48 @@ h1 {
         font-size: 0.9em;
     }
 }
+
+.difficulty-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.difficulty-controls label {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.1em;
+}
+
+.difficulty-controls select {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.difficulty-controls select:hover {
+    border-color: #667eea;
+}
+
+.difficulty-controls select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+.difficulty-description {
+    font-size: 0.9em;
+    color: #7f8c8d;
+    font-style: italic;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
